@@ -6,14 +6,17 @@ import com.example.notepad.models.Category;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Emitter;
 import io.reactivex.Observable;
 
 public class QueryOperations {
 
     public static Observable<Void> addCategory(DataBaseLibrary dataBaseLibrary, Category category){
-        return Observable.create(subscriber -> {
-            dataBaseLibrary.categoryDAO().insert(category);
-            Log.i("tat", "Добалена новая категория: " + category.getName());
+          return Observable.create(subscriber -> {
+              dataBaseLibrary.categoryDAO().insert(category);
+              subscriber.onComplete();
+          //subscriber.onNext();
         });
     }
 

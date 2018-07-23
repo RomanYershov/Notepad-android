@@ -18,9 +18,15 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.concurrent.Callable;
 
+import io.reactivex.Flowable;
+import io.reactivex.ObservableEmitter;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         DbConnector instance = DbConnector.getInstance(getApplicationContext());
-       DataBaseLibrary db = instance.getLibraryDb();
-          Category category = new Category();
-          category.setName("Разное");
+        DataBaseLibrary db = instance.getLibraryDb();
+        Category category = new Category();
+        category.setName("Покупки");
 
+        QueryOperations.addCategory(db, category);
 
-
-          //db.categoryDAO().insert(category);
+        //db.categoryDAO().insert(category);
 
 
         TextView showTv = findViewById(R.id.ma_category_tv);
@@ -48,19 +54,21 @@ public class MainActivity extends AppCompatActivity {
         btnShowCategory.setOnClickListener(view -> {
             //List<Category> all = db.categoryDAO().getAll();
             //showTv.setText(all.get(0).getName());
-            io.reactivex.Observable<List<Category>> categories = QueryOperations.getCategories(db);
-            categories.subscribe(result -> {
+            QueryOperations.getCategories(db)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(result -> {
+                        Log.e("", result.toString());
+                    });
 
-            });
+
+
+
 
         });
-         // LiveData<List<Category>> all = db.categoryDAO().getAll();
+        // LiveData<List<Category>> all = db.categoryDAO().getAll();
 
 
-
-
-
-       // io.reactivex.Observable<List<Category>> observable2 =  QueryOperations.getCategories(db);
+        // io.reactivex.Observable<List<Category>> observable2 =  QueryOperations.getCategories(db);
         Log.d("test", "test");
        /* observable.subscribe(result -> {
          List<Category> categories = result;

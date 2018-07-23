@@ -13,7 +13,7 @@ public class DbConnector {
 
 
     private DbConnector(Context context) {
-        dataBaseLibrary = Room.databaseBuilder(context,DataBaseLibrary.class, DATABASE_NAME).allowMainThreadQueries().build();
+        dataBaseLibrary = Room.databaseBuilder(context,DataBaseLibrary.class, DATABASE_NAME).build();
     }
 
     private DbConnector(){}

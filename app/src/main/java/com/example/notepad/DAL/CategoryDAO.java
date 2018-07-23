@@ -9,6 +9,8 @@ import com.example.notepad.models.Category;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 @Dao
 public interface CategoryDAO {
     @Query("SELECT * FROM categories")
