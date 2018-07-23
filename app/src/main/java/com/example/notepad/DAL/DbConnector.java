@@ -10,10 +10,10 @@ public class DbConnector {
     private static final String DATABASE_NAME = "libraryDatabase";
     private static DbConnector dataBaseConnector;
     private DataBaseLibrary dataBaseLibrary;
-    private CategoryDAO categoryDAO;
+
 
     private DbConnector(Context context) {
-        dataBaseLibrary = Room.databaseBuilder(context,DataBaseLibrary.class, DATABASE_NAME).build();
+        dataBaseLibrary = Room.databaseBuilder(context,DataBaseLibrary.class, DATABASE_NAME).allowMainThreadQueries().build();
     }
 
     private DbConnector(){}
@@ -24,11 +24,12 @@ public class DbConnector {
 
     public static DbConnector  getInstance(Context context){
         if(dataBaseConnector == null){
-            return  new DbConnector(context);
+            dataBaseConnector = new DbConnector(context);
+            return  dataBaseConnector;
         }
         return dataBaseConnector;
     }
 
 
-    public void createCategory()
+   // public void createCategory()
 }

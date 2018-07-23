@@ -9,6 +9,6 @@ import com.example.notepad.models.Task;
 
 @Database(entities = {Category.class, Task.class}, version = 1)
 public abstract class DataBaseLibrary extends RoomDatabase {
-    public abstract Category categoryDAO();
-    public abstract Task taskDAO();
+    public abstract CategoryDAO categoryDAO();
+    public abstract TaskDAO taskDAO();
 }
