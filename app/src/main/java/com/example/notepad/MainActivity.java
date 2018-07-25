@@ -1,35 +1,36 @@
 package com.example.notepad;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.notepad.DAL.DataBaseLibrary;
 import com.example.notepad.DAL.DbConnector;
 import com.example.notepad.DAL.QueryOperations;
+import com.example.notepad.adapters.CategoriesViewAdapter;
 import com.example.notepad.models.Category;
 
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.concurrent.Callable;
 
-import io.reactivex.Flowable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     @SuppressLint("CheckResult")
     @Override
@@ -40,39 +41,27 @@ public class MainActivity extends AppCompatActivity {
 
         DbConnector instance = DbConnector.getInstance(getApplicationContext());
         DataBaseLibrary db = instance.getLibraryDb();
-        Category category = new Category();
-        category.setName("Покупки");
 
-        QueryOperations.addCategory(db, category);
-
-        //db.categoryDAO().insert(category);
-
-
-        TextView showTv = findViewById(R.id.ma_category_tv);
-        Button btnShowCategory = findViewById(R.id.ma_show_categories_btn);
-
-        btnShowCategory.setOnClickListener(view -> {
-            //List<Category> all = db.categoryDAO().getAll();
-            //showTv.setText(all.get(0).getName());
-            QueryOperations.getCategories(db)
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe(result -> {
-                        Log.e("", result.toString());
-                    });
+        QueryOperations.getCategories(db)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(
+                        categories -> {
+                            CategoriesViewAdapter adapter = new CategoriesViewAdapter(categories);
+                            RecyclerView recyclerView = findViewById(R.id.ma_content_rv);
+                            recyclerView.setAdapter(adapter);
+                        }
+                );
 
 
 
-
-
-        });
-        // LiveData<List<Category>> all = db.categoryDAO().getAll();
-
-
-        // io.reactivex.Observable<List<Category>> observable2 =  QueryOperations.getCategories(db);
-        Log.d("test", "test");
-       /* observable.subscribe(result -> {
-         List<Category> categories = result;
-        });*/
 
     }
+
+    public void test(View view) {
+        String name =  ((TextView)view.findViewById(R.id.category_name_tv)).getText().toString();
+
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+    }
+
 }

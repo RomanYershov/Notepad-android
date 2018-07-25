@@ -7,9 +7,13 @@ import android.arch.persistence.room.Query;
 
 import com.example.notepad.models.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface CategoryDAO {
