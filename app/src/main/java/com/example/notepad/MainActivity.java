@@ -31,6 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
+    QueryOperations queryOperations;
 
     @SuppressLint("CheckResult")
     @Override
@@ -38,11 +39,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Category products = new Category();
+        products.setName("Медитация");
+
 
         DbConnector instance = DbConnector.getInstance(getApplicationContext());
         DataBaseLibrary db = instance.getLibraryDb();
+        queryOperations = new QueryOperations(db);
 
-        QueryOperations.getCategories(db)
+        queryOperations.addCategory(products).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();
+
+        queryOperations.getCategories()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
@@ -54,13 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 );
 
 
-
-
     }
 
     public void test(View view) {
-        String name =  ((TextView)view.findViewById(R.id.category_name_tv)).getText().toString();
-
+        String name = ((TextView) view.findViewById(R.id.category_name_tv)).getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
     }
 

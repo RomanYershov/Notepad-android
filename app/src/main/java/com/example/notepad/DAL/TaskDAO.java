@@ -21,7 +21,7 @@ public interface TaskDAO {
     List<Task> getTasksByCategoryId(int categoryId);
 
     @Insert
-    void insert(Task task);
+    long insert(Task task);
 
     @Delete
     void delete(Task task);
