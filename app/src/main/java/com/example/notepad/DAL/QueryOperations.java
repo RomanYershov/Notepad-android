@@ -47,11 +47,8 @@ public class QueryOperations {
                 subscribe.onNext( dataBaseLibrary.taskDAO().getTasksByCategoryId(categoryId)));
     }
 
-    public void addTask(Task task){
-         Completable.fromAction(() -> dataBaseLibrary.taskDAO().insert(task))
-         .observeOn(AndroidSchedulers.mainThread())
-         .subscribeOn(Schedulers.newThread())
-         .subscribe();
+    public Observable<Long> addTask(Task task){
+         return Observable.create(x -> x.onNext(dataBaseLibrary.taskDAO().insert(task)));
     }
 
    /* public Observable<Long> deleteTask(Task task){

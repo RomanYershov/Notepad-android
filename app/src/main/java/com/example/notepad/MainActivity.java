@@ -2,6 +2,7 @@ package com.example.notepad;
 
 import android.annotation.SuppressLint;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import com.example.notepad.DAL.DbConnector;
 import com.example.notepad.DAL.QueryOperations;
 import com.example.notepad.adapters.CategoriesViewAdapter;
 import com.example.notepad.models.Category;
+import com.example.notepad.models.Task;
 
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static DataBaseLibrary db;
 
     QueryOperations queryOperations;
 
@@ -39,18 +42,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Category products = new Category();
-        products.setName("Медитация");
+      /*  Category products = new Category();
+        products.setName("Продукты");*/
+
+        Task task = new Task();
+        task.setCategoryId(1);
+        task.setCreateDate(123321);
+        task.setDescription("Some text text test");
+
 
 
         DbConnector instance = DbConnector.getInstance(getApplicationContext());
-        DataBaseLibrary db = instance.getLibraryDb();
+        db = instance.getLibraryDb();
         queryOperations = new QueryOperations(db);
 
-        queryOperations.addCategory(products).observeOn(AndroidSchedulers.mainThread())
+       /* queryOperations.addTask(task)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();*/
+
+       /* queryOperations.addCategory(products).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
-
+*/
         queryOperations.getCategories()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
@@ -66,8 +80,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test(View view) {
-        String name = ((TextView) view.findViewById(R.id.category_name_tv)).getText().toString();
+        TextView textView = ((TextView) view.findViewById(R.id.category_name_tv));
+        String name = textView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        int categoryId = (int) textView.getTag();
+        Intent taskActivityIntent = new Intent(getApplicationContext(), TaskActivity.class);
+        taskActivityIntent.putExtra("CATEGORY_ID", String.valueOf(categoryId));
+
+        startActivity(taskActivityIntent);
     }
 
 }

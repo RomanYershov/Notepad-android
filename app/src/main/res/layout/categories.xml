@@ -28,6 +28,7 @@
                android:layout_height="wrap_content"
                android:textSize="28sp"
                />
+
        </RelativeLayout>
 
     </android.support.v7.widget.CardView>

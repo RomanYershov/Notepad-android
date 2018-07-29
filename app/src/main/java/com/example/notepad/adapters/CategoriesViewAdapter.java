@@ -32,6 +32,7 @@ public class CategoriesViewAdapter extends RecyclerView.Adapter<CategoriesViewAd
     public void onBindViewHolder(@NonNull ViewHolderCategory viewHolderCategory, int i) {
         Category category = categories.get(i);
         viewHolderCategory.categoryName.setText(category.getName());
+        viewHolderCategory.categoryName.setTag(category.getId());
     }
 
     @Override

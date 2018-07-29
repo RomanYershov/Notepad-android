@@ -17,7 +17,7 @@ public interface TaskDAO {
     @Query("SELECT * FROM tasks")
     List<Task> getAll();
 
-    @Query("SELECT * FROM tasks WHERE id = :categoryId")
+    @Query("SELECT * FROM tasks WHERE category_id = :categoryId")
     List<Task> getTasksByCategoryId(int categoryId);
 
     @Insert
