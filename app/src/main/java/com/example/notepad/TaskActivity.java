@@ -1,10 +1,13 @@
 package com.example.notepad;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.notepad.DAL.QueryOperations;
 import com.example.notepad.adapters.TaskViewAdapter;
@@ -30,7 +33,7 @@ public class TaskActivity extends AppCompatActivity {
 
         QueryOperations queryOperations = new QueryOperations(db);
 
-        queryOperations.getTasksByCategoryId(Integer.parseInt(category_id))
+      queryOperations.getTasksByCategoryId(Integer.parseInt(category_id))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(tasks -> {
@@ -38,6 +41,11 @@ public class TaskActivity extends AppCompatActivity {
                     RecyclerView recyclerView = findViewById(R.id.task_content_rv);
                     recyclerView.setAdapter(adapter);
                 });
+
+        FloatingActionButton btnAddTask = findViewById(R.id.task_add_button);
+        btnAddTask.setOnClickListener(view -> {
+
+        });
 
     }
 }

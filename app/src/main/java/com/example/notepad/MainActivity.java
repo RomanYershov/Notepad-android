@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void test(View view) {
         TextView textView = ((TextView) view.findViewById(R.id.category_name_tv));
-        String name = textView.getText().toString();
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         int categoryId = (int) textView.getTag();
         Intent taskActivityIntent = new Intent(getApplicationContext(), TaskActivity.class);
         taskActivityIntent.putExtra("CATEGORY_ID", String.valueOf(categoryId));
