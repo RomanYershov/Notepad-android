@@ -17,7 +17,7 @@ public class Task {
     @ColumnInfo(name = "description")
     private String description;
     @ColumnInfo(name = "create_date")
-    private int createDate;
+    private String createDate;
     @ColumnInfo(name = "is_done")
     private boolean isDone = false;
 
@@ -45,11 +45,11 @@ public class Task {
         this.description = description;
     }
 
-    public int getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(int createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

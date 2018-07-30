@@ -1,23 +1,41 @@
 package com.example.notepad;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.notepad.DAL.QueryOperations;
+import com.example.notepad.models.Task;
+
+import java.util.Date;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.example.notepad.MainActivity.db;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddTaskFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  */
-public class AddTaskFragment extends Fragment {
+public class AddTaskFragment extends DialogFragment {
 
-    private OnFragmentInteractionListener mListener;
 
     public AddTaskFragment() {
         // Required empty public constructor
@@ -31,42 +49,47 @@ public class AddTaskFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_add_task, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
+    @NonNull
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_add_task, null);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        return builder.setView(dialogView).setPositiveButton(R.string.btn_add_task, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                EditText editText = dialogView.findViewById(R.id.dialog_addtask_et);
+                int categoryId = getArguments().getInt("categoryId");
+                String text = editText.getText().toString();
+
+                Task newTask = new Task();
+                newTask.setDescription(text);
+
+                Date date = new Date();
+                newTask.setCreateDate(date.toString());
+
+                newTask.setCategoryId(categoryId);
+
+
+
+                QueryOperations queryOperations = new QueryOperations(db);
+                queryOperations.addTask(newTask)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe();
+            }
+        }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).create();
+
+
+
     }
 }

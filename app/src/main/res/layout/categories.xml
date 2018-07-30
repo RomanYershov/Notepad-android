@@ -15,7 +15,7 @@
         app:cardElevation="@dimen/cardview_default_radius"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="test">
+        android:onClick="onClickCategoryCard">
 
        <RelativeLayout
            android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.notepad.DAL.QueryOperations;
@@ -33,7 +34,7 @@ public class TaskActivity extends AppCompatActivity {
 
         QueryOperations queryOperations = new QueryOperations(db);
 
-      queryOperations.getTasksByCategoryId(Integer.parseInt(category_id))
+        queryOperations.getTasksByCategoryId(Integer.parseInt(category_id))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(tasks -> {
@@ -45,6 +46,15 @@ public class TaskActivity extends AppCompatActivity {
         FloatingActionButton btnAddTask = findViewById(R.id.task_add_button);
         btnAddTask.setOnClickListener(view -> {
 
+            AddTaskFragment addDialog = new AddTaskFragment();
+            Bundle args = new Bundle();
+            args.putInt("categoryId", Integer.parseInt(category_id));
+            addDialog.setArguments(args);
+            addDialog.show(getSupportFragmentManager(), "custom");
+
+        /* getSupportFragmentManager().beginTransaction()
+                    .add(R.id.task_container, new AddTaskFragment())
+                    .commit();*/
         });
 
     }

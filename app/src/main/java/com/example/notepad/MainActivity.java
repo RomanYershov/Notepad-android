@@ -33,7 +33,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     public static DataBaseLibrary db;
-
     QueryOperations queryOperations;
 
     @SuppressLint("CheckResult")
@@ -42,13 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      /*  Category products = new Category();
-        products.setName("Продукты");*/
+        //Category products = new Category();
+       // products.setName("Медитация");
 
-        Task task = new Task();
-        task.setCategoryId(1);
-        task.setCreateDate(123321);
-        task.setDescription("Some text text test");
+
 
 
 
@@ -56,15 +52,8 @@ public class MainActivity extends AppCompatActivity {
         db = instance.getLibraryDb();
         queryOperations = new QueryOperations(db);
 
-       /* queryOperations.addTask(task)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe();*/
 
-       /* queryOperations.addCategory(products).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe();
-*/
+
         queryOperations.getCategories()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
@@ -79,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void test(View view) {
+    public void onClickCategoryCard(View view) {
         TextView textView = ((TextView) view.findViewById(R.id.category_name_tv));
+        String name = textView.getText().toString();
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         int categoryId = (int) textView.getTag();
         Intent taskActivityIntent = new Intent(getApplicationContext(), TaskActivity.class);
         taskActivityIntent.putExtra("CATEGORY_ID", String.valueOf(categoryId));

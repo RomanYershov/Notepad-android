@@ -35,7 +35,6 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
         taskViewHolder.createDate.setText(String.valueOf(task.getCreateDate()));
         taskViewHolder.createDate.setTag(task.getCategoryId());
         taskViewHolder.description.setText(task.getDescription());
-        taskViewHolder.description.setTag(task.getId());
     }
 
     @Override
