@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Category products = new Category();
-       // products.setName("Медитация");
+        Category products = new Category();
+        products.setName("Медитация");
 
 
 
@@ -52,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
         db = instance.getLibraryDb();
         queryOperations = new QueryOperations(db);
 
-
+       /* queryOperations.addCategory(products)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();*/
 
         queryOperations.getCategories()
                 .observeOn(AndroidSchedulers.mainThread())

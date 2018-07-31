@@ -27,5 +27,5 @@ public interface TaskDAO {
     void delete(Task task);
 
     @Query("UPDATE  tasks SET is_done = :isDone WHERE id = :taskId")
-    void done(int taskId, boolean isDone);
+    long done(int taskId, boolean isDone);
 }

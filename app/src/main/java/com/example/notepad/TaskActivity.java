@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -38,10 +40,12 @@ public class TaskActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(tasks -> {
-                    TaskViewAdapter adapter = new TaskViewAdapter(tasks);
+                    TaskViewAdapter adapter = new TaskViewAdapter( getApplicationContext(),tasks);
                     RecyclerView recyclerView = findViewById(R.id.task_content_rv);
                     recyclerView.setAdapter(adapter);
                 });
+
+
 
         FloatingActionButton btnAddTask = findViewById(R.id.task_add_button);
         btnAddTask.setOnClickListener(view -> {
@@ -51,11 +55,21 @@ public class TaskActivity extends AppCompatActivity {
             args.putInt("categoryId", Integer.parseInt(category_id));
             addDialog.setArguments(args);
             addDialog.show(getSupportFragmentManager(), "custom");
-
-        /* getSupportFragmentManager().beginTransaction()
-                    .add(R.id.task_container, new AddTaskFragment())
-                    .commit();*/
         });
 
+
+
+      /*  CheckBox checkBox = findViewById(R.id.task_isDone_chb);*/
+      /*  checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                boolean a = b;
+            }
+        });*/
+
     }
+
+   /* private void checkedCheckBox(CompoundButton compoundButton, boolean b) {
+        boolean bol = b;
+    }*/
 }

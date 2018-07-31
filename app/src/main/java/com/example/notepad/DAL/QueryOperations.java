@@ -51,6 +51,11 @@ public class QueryOperations {
          return Observable.create(x -> x.onNext(dataBaseLibrary.taskDAO().insert(task)));
     }
 
+
+    public Observable<Long> done(int id, boolean isChecked){
+       return Observable.create(subscribe -> subscribe.onNext(dataBaseLibrary.taskDAO().done(id, isChecked )));
+    }
+
    /* public Observable<Long> deleteTask(Task task){
         return Observable.create(x -> x.onNext(dataBaseLibrary.taskDAO().delete(task)));
     }*/
