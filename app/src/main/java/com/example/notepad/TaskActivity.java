@@ -16,6 +16,7 @@ import com.example.notepad.DAL.QueryOperations;
 import com.example.notepad.adapters.TaskViewAdapter;
 import com.example.notepad.models.Task;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
@@ -40,6 +41,7 @@ public class TaskActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(tasks -> {
+                    Collections.sort(tasks, (o1, o2) -> o1.isDone() != o2.isDone() ? 0 : -1);
                     TaskViewAdapter adapter = new TaskViewAdapter( getApplicationContext(),tasks);
                     RecyclerView recyclerView = findViewById(R.id.task_content_rv);
                     recyclerView.setAdapter(adapter);
@@ -57,19 +59,6 @@ public class TaskActivity extends AppCompatActivity {
             addDialog.show(getSupportFragmentManager(), "custom");
         });
 
-
-
-      /*  CheckBox checkBox = findViewById(R.id.task_isDone_chb);*/
-      /*  checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                boolean a = b;
-            }
-        });*/
-
     }
 
-   /* private void checkedCheckBox(CompoundButton compoundButton, boolean b) {
-        boolean bol = b;
-    }*/
 }

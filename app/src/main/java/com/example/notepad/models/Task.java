@@ -60,4 +60,10 @@ public class Task {
     public void setDone(boolean done) {
         isDone = done;
     }
+
+
+
+    private int sortedByisDone(Task task_1){
+        return this.getDescription().compareTo(task_1.getDescription());
+    }
 }

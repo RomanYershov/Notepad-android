@@ -16,6 +16,9 @@ import com.example.notepad.DAL.QueryOperations;
 import com.example.notepad.R;
 import com.example.notepad.models.Task;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -61,6 +64,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
