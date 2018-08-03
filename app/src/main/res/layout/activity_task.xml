@@ -3,16 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".TaskActivity"
+    android:id="@+id/task_container"
+   >
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/ma_content_rv"
+        android:id="@+id/task_content_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager">
 
+
     </android.support.v7.widget.RecyclerView>
+
+
+ <android.support.design.widget.FloatingActionButton
+     android:id="@+id/task_add_button"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_margin="16dp"
+     android:layout_gravity="end|bottom"
+
+     android:src="@drawable/ic_add_black_24dp"
+      />
+
+
 
 </LinearLayout>

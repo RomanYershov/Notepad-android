@@ -8,11 +8,16 @@ import android.arch.persistence.room.PrimaryKey;
 public class Category {
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     @ColumnInfo(name = "name")
     private String name;
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
